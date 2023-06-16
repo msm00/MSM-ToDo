@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
@@ -37,19 +39,26 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoMainScreen() {
-    LazyColumn {
-        item { ToDoItem(itemDesc = "Describe the note") }
+    LazyColumn(modifier = Modifier.padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+        ) {
+        repeat(30) {
+            item { ToDoItem(itemDesc = stringResource(R.string.describe_the_note)) }
+        }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoItem(itemDesc: String, modifier: Modifier = Modifier) {
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(all = 4.dp)
         ) {
-        Text(
-            text = itemDesc,
+        TextField(
+            value = itemDesc,
+            onValueChange = {},
             modifier = modifier.padding(all = 4.dp)
         )
     }
@@ -68,6 +77,6 @@ fun ToDoMainScreenPreview() {
 @Composable
 fun ToDoItemPreview() {
     MSMToDoTheme {
-        ToDoItem(itemDesc = "Bring the box")
+        ToDoItem(itemDesc = stringResource(id = R.string.describe_the_note))
     }
 }
