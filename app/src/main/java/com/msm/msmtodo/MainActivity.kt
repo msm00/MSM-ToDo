@@ -47,11 +47,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoMainScreen() {
-    LazyColumn(modifier = Modifier
-        .padding(8.dp)
+    LazyColumn(modifier = Modifier.padding(8.dp)
         .background(MaterialTheme.colorScheme.outline),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
         ) {
         repeat(30) {
             item { ToDoItem(/*itemDesc = stringResource(R.string.describe_the_note)*/) }
@@ -59,17 +58,16 @@ fun ToDoMainScreen() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoItem(modifier: Modifier = Modifier) {
 //    val TAG = "CHECKBOX ERR"
     val itemDesc = stringResource(id = R.string.describe_the_note)
     var checkState by remember { mutableStateOf(false)}
-//    var amountInput by remember { mutableStateOf("") }
 
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(all = 4.dp)
+        modifier = Modifier.padding(all = 4.dp)
             .background(MaterialTheme.colorScheme.inversePrimary)
             .fillMaxWidth()
         ) {
