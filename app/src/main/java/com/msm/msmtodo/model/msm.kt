@@ -1,3 +1,3 @@
-data class MSM(val id: Int, val name: String, val description: String){
+data class msm(val id: Int, val name: String, val description: String){
 
 }
