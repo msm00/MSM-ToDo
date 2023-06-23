@@ -1,0 +1,8 @@
+adwmsmdb_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-zurich-1.oraclecloud.com))(connect_data=(service_name=g8c9a51bc78a43e_adwmsmdb_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+adwmsmdb_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-zurich-1.oraclecloud.com))(connect_data=(service_name=g8c9a51bc78a43e_adwmsmdb_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+adwmsmdb_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-zurich-1.oraclecloud.com))(connect_data=(service_name=g8c9a51bc78a43e_adwmsmdb_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+
