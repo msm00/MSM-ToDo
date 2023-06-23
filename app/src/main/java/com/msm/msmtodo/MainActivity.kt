@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.msm.msmtodo.model.OracleDatabaseHelper
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,6 +48,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoMainScreen() {
+    // get the connection
+//    val conn = OracleDBConnection.getConnection()
+    val walletPath = "./Users/msm/AndroidStudioProjects/MSMToDo/Wallet"
+    val helper = OracleDatabaseHelper(walletPath)
+
+    val serviceName = "adwmsmdb_low"
+    val connection = helper.getConnection(serviceName)
+
+// Use the connection to execute queries or perform database operations
+// Remember to properly close the connection when you're done
+    connection.close()
+
+
+//    println(conn.isValid(0))
+
     LazyColumn(modifier = Modifier.padding(8.dp)
         .background(MaterialTheme.colorScheme.outline),
         horizontalAlignment = Alignment.CenterHorizontally,
