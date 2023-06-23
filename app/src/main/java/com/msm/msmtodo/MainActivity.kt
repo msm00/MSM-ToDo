@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
 fun ToDoMainScreen() {
     // get the connection -- set connection is not could be in Composable function
 //    val conn = OracleDatabase.getConnection()
+//    val data = ETL().getDBlist()
 
 
 //    println(conn.isValid(0))

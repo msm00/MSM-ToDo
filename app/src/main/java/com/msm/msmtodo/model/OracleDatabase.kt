@@ -1,6 +1,5 @@
 package com.msm.msmtodo.model
 
-import msm
 import java.sql.Connection
 import java.sql.DriverManager
 import java.util.Properties
@@ -34,40 +33,42 @@ class OracleDatabase {
     }
 }
 
+/*
 fun main(){
-    val conn = OracleDatabase.getConnection()
-    // prints true if the connection is valid
-    println(conn.isValid(0))
+val conn = OracleDatabase.getConnection()
+// prints true if the connection is valid
+println(conn.isValid(0))
 
-    // define query
-    val query = "select ID,\n" +
-            "NAME,\n" +
-            "DESCRIPTION from MSM"
-    val stmt = conn.prepareStatement(query)
-    val rs = stmt.executeQuery()
+// define query
+val query = "select ID,\n" +
+"NAME,\n" +
+"DESCRIPTION from MSM"
+val stmt = conn.prepareStatement(query)
+val rs = stmt.executeQuery()
 
-    val msmList = mutableListOf<msm>()
+val msmList = mutableListOf<msm>()
 
-    while (rs.next()) {
-        // getting the value of the id column
-        val id = rs.getInt("id")
-        // getting the value of the name column
-        val name = rs.getString("name")
-        // getting the value of the description column
-        val desc = rs.getString("description")
+while (rs.next()) {
+// getting the value of the id column
+val id = rs.getInt("id")
+// getting the value of the name column
+val name = rs.getString("name")
+// getting the value of the description column
+val desc = rs.getString("description")
 //        println("id: $id, name: $name, desc: $desc")
 
-        /*
-    constructing a msm table object and
-    putting data into the list
-     */
-        msmList.add(msm(id = id, name = name, description = desc))
+/ *
+constructing a msm table object and
+putting data into the list
+* /
+msmList.add(msm(id = id, name = name, description = desc))
 
-    }
-
-    rs.close()
-    stmt.close()
-    conn.close()
-
-    println(msmList)
 }
+
+rs.close()
+stmt.close()
+conn.close()
+
+println(msmList)
+}
+*/

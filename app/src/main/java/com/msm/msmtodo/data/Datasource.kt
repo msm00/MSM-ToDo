@@ -16,3 +16,13 @@ class Datasource {
         )
     }
 }
+
+/*
+fun main(){
+    val sourceList = Datasource().loadData()
+    print(sourceList)
+    sourceList.forEach {
+        println("${it.id} chce ${it.noteDesc} a ${if (it.checkInd) "je" else "není"} hotovo")
+    }
+}
+//*/
