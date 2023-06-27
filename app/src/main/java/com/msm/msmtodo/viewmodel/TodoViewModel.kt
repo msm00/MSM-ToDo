@@ -1,9 +1,10 @@
 package com.msm.msmtodo.viewmodel
 
+import androidx.lifecycle.ViewModel
 import com.msm.msmtodo.model.OracleDatabase
 import msm
 
-class ETL {
+class TodoViewModel : ViewModel(){
     fun getData(): MutableList<msm> {
         val conn = OracleDatabase.getConnection()
         // prints true if the connection is valid
@@ -49,7 +50,7 @@ class ETL {
 }
 
 fun main(){
-    val data = ETL().getData()
+    val data = TodoViewModel().getData()
     data.forEach {
         println("${it.id} chce ${it.name} a ${it.description}")
     }
