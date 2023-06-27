@@ -57,10 +57,10 @@ val name = rs.getString("name")
 val desc = rs.getString("description")
 //        println("id: $id, name: $name, desc: $desc")
 
-/ *
+/*
 constructing a msm table object and
 putting data into the list
-* /
+*/
 msmList.add(msm(id = id, name = name, description = desc))
 
 }
@@ -71,4 +71,4 @@ conn.close()
 
 println(msmList)
 }
-*/
+//*/
