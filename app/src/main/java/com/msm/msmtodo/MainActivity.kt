@@ -19,7 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,7 +54,8 @@ fun ToDoMainScreen() {
 
 //    println(conn.isValid(0))
 
-    LazyColumn(modifier = Modifier.padding(8.dp)
+    LazyColumn(modifier = Modifier
+        .padding(8.dp)
         .background(MaterialTheme.colorScheme.outline),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -70,11 +71,12 @@ fun ToDoMainScreen() {
 fun ToDoItem(modifier: Modifier = Modifier) {
 //    val TAG = "CHECKBOX ERR"
     val itemDesc = stringResource(id = R.string.describe_the_note)
-    var checkState by remember { mutableStateOf(false)}
+    var checkState by rememberSaveable { mutableStateOf(false)}
 
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(all = 4.dp)
+        modifier = Modifier
+            .padding(all = 4.dp)
             .background(MaterialTheme.colorScheme.inversePrimary)
             .fillMaxWidth()
         ) {
