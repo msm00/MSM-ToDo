@@ -2,10 +2,20 @@ package com.msm.msmtodo.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.msm.msmtodo.model.OracleDatabase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import msm
 
 class TodoViewModel : ViewModel(){
-    fun getData(): MutableList<msm> {
+    //ToDo UI state
+//    private val _uiState = MutableStateFlow(ToDoUiState())
+//    // Backing property to avoid state updates from other classes
+//    val uiState: StateFlow<ToDoUiState> = _uiState.asStateFlow()
+
+    private val _myData = MutableStateFlow<List<msm>>(emptyList())
+    val myData: StateFlow<List<msm>> = _myData
+
+    private fun getData(): MutableList<msm> {
         val conn = OracleDatabase.getConnection()
         // prints true if the connection is valid
         println(conn.isValid(0))
@@ -33,6 +43,7 @@ class TodoViewModel : ViewModel(){
         putting data into the list
          */
             msmList.add(msm(id = id, name = name, description = desc))
+//            _uiState.value = ToDoUiState(id = id, name = name, description = desc)
 
         }
 
@@ -43,15 +54,23 @@ class TodoViewModel : ViewModel(){
         return msmList
     }
 
-    fun getDBlist(): MutableList<msm> {
-        val rData = getData()
-        return rData
+    fun loadDataState(){
+        _myData.value = getData()
+    }
+
+    fun pprint(){
+        println(_myData.value)
+        println(myData.value)
     }
 }
 
 fun main(){
-    val data = TodoViewModel().getData()
-    data.forEach {
-        println("${it.id} chce ${it.name} a ${it.description}")
-    }
+//    val data = TodoViewModel().getData()
+//    data.forEach {
+//        println("${it.id} chce ${it.name} a ${it.description}")
+//    }
+    val todoViewModel = TodoViewModel()
+    todoViewModel.pprint()
+    todoViewModel.loadDataState()
+    todoViewModel.pprint()
 }

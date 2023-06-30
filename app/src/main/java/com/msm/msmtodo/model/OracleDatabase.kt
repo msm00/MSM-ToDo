@@ -21,14 +21,17 @@ class OracleDatabase {
 //            props.setProperty("oracle.net.ssl_cipher_suites", "AES256-SHA256")
 //            props.setProperty("oracle.net.ssl_server_dn_match", "true")
 
-            props.setProperty("oracle.net.wallet_location", "/Users/msm/IdeaProjects/connectADB/Wallet")
+            props.setProperty(
+                "oracle.net.wallet_location",
+                "/Users/msm/IdeaProjects/connectADB/Wallet"
+            )
 
-            val dbUrl = "jdbc:oracle:thin:@adwmsmdb_high?TNS_ADMIN=/Users/msm/IdeaProjects/connectADB/Wallet"
+            val dbUrl =
+                "jdbc:oracle:thin:@adwmsmdb_high?TNS_ADMIN=/Users/msm/IdeaProjects/connectADB/Wallet"
             val dbUser = "OCIUSER"
             val dbPassword = "PanenkaSkakava123456/"
 
-            val connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword)
-            return connection
+            return DriverManager.getConnection(dbUrl, dbUser, dbPassword)
         }
     }
 }

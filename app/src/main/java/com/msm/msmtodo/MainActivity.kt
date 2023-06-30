@@ -10,23 +10,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
+import com.msm.msmtodo.viewmodel.TodoViewModel
+import msm
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +48,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ToDoMainScreen() {
+fun ToDoMainScreen(
+
+) {
     // get the connection -- set connection is not could be in Composable function
 //    val conn = OracleDatabase.getConnection()
 //    val data = ETL().getDBlist()
+//    val toDoUiState by todoViewModel.uiState.collectAsState()
 
+//    todoViewModel.loadDataState()
 
 //    println(conn.isValid(0))
+
 
     LazyColumn(modifier = Modifier
         .padding(8.dp)
@@ -61,17 +68,28 @@ fun ToDoMainScreen() {
         verticalArrangement = Arrangement.Center
         ) {
         repeat(30) {
-            item { ToDoItem(/*itemDesc = stringResource(R.string.describe_the_note)*/) }
+            item {
+                ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
+//                ToDoItem(itemDesc = toDoUiState.description)
+//                ToDoItem(itemDesc = dataState[0].description)
+                }
+            }
+//            item {toDoUiState.msmList[0]}
         }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoItem(modifier: Modifier = Modifier) {
+fun ToDoItem(
+    modifier: Modifier = Modifier, itemDesc: String,
+    todoViewModel: TodoViewModel = viewModel()
+    ) {
 //    val TAG = "CHECKBOX ERR"
-    val itemDesc = stringResource(id = R.string.describe_the_note)
+//    val itemDesc = stringResource(id = R.string.describe_the_note)
     var checkState by rememberSaveable { mutableStateOf(false)}
+    val dataState: List<msm> by todoViewModel.myData.collectAsState(
+        initial = emptyList()
+    )
 
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -83,10 +101,13 @@ fun ToDoItem(modifier: Modifier = Modifier) {
         Text(
             text = itemDesc,
             modifier
-                .padding(4.dp)
-                .fillMaxWidth(0.8f),
+                .padding(4.dp),
+//                .fillMaxWidth(0.8f),
             color = MaterialTheme.colorScheme.primary,
         )
+        Button(onClick = { todoViewModel.loadDataState() }) {
+            Text("Refresh Data")
+        }
         Checkbox(checked = checkState, onCheckedChange = { checkState = !checkState})
     }
 }
@@ -114,6 +135,6 @@ fun ToDoMainScreenPreview() {
 @Composable
 fun ToDoItemPreview() {
     MSMToDoTheme {
-        ToDoItem()
+        ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
     }
 }
