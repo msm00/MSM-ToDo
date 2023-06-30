@@ -18,7 +18,7 @@ class TodoViewModel : ViewModel(){
     private fun getData(): MutableList<msm> {
         val conn = OracleDatabase.getConnection()
         // prints true if the connection is valid
-        println(conn.isValid(0))
+//        println(conn.isValid(0))
 
         // define query
         val query = "select ID,\n" +
