@@ -15,9 +15,9 @@ class TodoViewModel : ViewModel(){
     private val _myData = MutableStateFlow<List<msm>>(emptyList())
     val myData: StateFlow<List<msm>> = _myData
 
-    init {
-        loadDataState()
-    }
+//    init {
+//        loadDataState()
+//    }
 
     private fun getData(): MutableList<msm> {
 //        Class.forName("oracle.jdbc.driver.OracleDriver")
@@ -77,6 +77,6 @@ fun main(){
 //    }
     val todoViewModel = TodoViewModel()
     todoViewModel.pprint()
-//    todoViewModel.loadDataState()
-//    todoViewModel.pprint()
+    todoViewModel.loadDataState()
+    todoViewModel.pprint()
 }
