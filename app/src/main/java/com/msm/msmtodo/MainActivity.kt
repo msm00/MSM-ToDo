@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
 fun ToDoMainScreen(
 
 ) {
-    // get the connection -- set connection is not could be in Composable function
+    // get the connection -- set connection is could not be in Composable function
 //    val conn = OracleDatabase.getConnection()
 //    val data = ETL().getDBlist()
 //    val toDoUiState by todoViewModel.uiState.collectAsState()

@@ -15,7 +15,12 @@ class TodoViewModel : ViewModel(){
     private val _myData = MutableStateFlow<List<msm>>(emptyList())
     val myData: StateFlow<List<msm>> = _myData
 
+    init {
+        loadDataState()
+    }
+
     private fun getData(): MutableList<msm> {
+//        Class.forName("oracle.jdbc.driver.OracleDriver")
         val conn = OracleDatabase.getConnection()
         // prints true if the connection is valid
 //        println(conn.isValid(0))
@@ -56,6 +61,7 @@ class TodoViewModel : ViewModel(){
 
     fun loadDataState(){
         _myData.value = getData()
+//        _myData.value = "Set the Mars API status response here!"
     }
 
     fun pprint(){
@@ -71,6 +77,6 @@ fun main(){
 //    }
     val todoViewModel = TodoViewModel()
     todoViewModel.pprint()
-    todoViewModel.loadDataState()
-    todoViewModel.pprint()
+//    todoViewModel.loadDataState()
+//    todoViewModel.pprint()
 }

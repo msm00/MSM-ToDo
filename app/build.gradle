@@ -68,8 +68,10 @@ dependencies {
     implementation ('com.oracle.database.security:oraclepki:23.2.0.0')
     implementation ('com.oracle.database.security:osdt_cert:21.10.0.0')
     implementation ('com.oracle.database.security:osdt_core:21.10.0.0')
-    implementation ('com.oracle.database.jdbc:ojdbc8:23.2.0.0')
+//    implementation ('com.oracle.database.jdbc:ojdbc8:23.2.0.0')
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+    implementation files('libs/ojdbc8.jar')
+//    implementation fileTree(dir: '/libs/*', include: ['*.aar', '*.jar'], exclude: [])
     //    implementation(enforcedPlatform("com.oracle.database.jdbc:ojdbc-bom:19.7.0.0"))
 //    implementation("com.oracle.database.jdbc:ojdbc8")
 //    implementation("com.oracle.database.jdbc:ucp")

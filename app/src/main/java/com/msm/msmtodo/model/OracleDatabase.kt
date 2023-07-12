@@ -11,6 +11,7 @@ class OracleDatabase {
 //            val user = "PanenkaSkakava123456/"
 //            val password = "OCIUSER"
 //            return DriverManager.getConnection(url, user, password)
+            Class.forName("oracle.jdbc.driver.OracleDriver")
 
             val props = Properties()
 //            props.setProperty("user", "OCIUSER")
