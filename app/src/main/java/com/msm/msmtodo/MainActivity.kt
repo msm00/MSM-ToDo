@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 import com.msm.msmtodo.viewmodel.TodoViewModel
-import msm
+import ui.HomeScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -40,7 +40,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ToDoMainScreen()
+                    val todoViewModel: TodoViewModel = viewModel()
+//                    ToDoMainScreen(todoUiState = todoViewModel.todoUiState)
+                    HomeScreen(
+                        marsUiState = todoViewModel.todoUiState)
                 }
             }
         }
@@ -49,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoMainScreen(
-
+    todoUiState: String, modifier: Modifier = Modifier
 ) {
     // get the connection -- set connection is could not be in Composable function
 //    val conn = OracleDatabase.getConnection()
@@ -69,8 +72,8 @@ fun ToDoMainScreen(
         ) {
         repeat(30) {
             item {
-                ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
-//                ToDoItem(itemDesc = toDoUiState.description)
+//                ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
+                ToDoItem(itemDesc = todoUiState)
 //                ToDoItem(itemDesc = dataState[0].description)
                 }
             }
@@ -82,14 +85,15 @@ fun ToDoMainScreen(
 @Composable
 fun ToDoItem(
     modifier: Modifier = Modifier, itemDesc: String,
-    todoViewModel: TodoViewModel = viewModel()
+//    todoViewModel: TodoViewModel = viewModel()
+
     ) {
 //    val TAG = "CHECKBOX ERR"
 //    val itemDesc = stringResource(id = R.string.describe_the_note)
     var checkState by rememberSaveable { mutableStateOf(false)}
-    val dataState: List<msm> by todoViewModel.myData.collectAsState(
-        initial = emptyList()
-    )
+//    val dataState: List<msm> by todoViewModel.myData.collectAsState(
+//        initial = emptyList()
+//    )
 
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -105,7 +109,7 @@ fun ToDoItem(
 //                .fillMaxWidth(0.8f),
             color = MaterialTheme.colorScheme.primary,
         )
-        Button(onClick = { todoViewModel.loadDataState() }) {
+        Button(onClick = { /*todoViewModel.loadDataState()*/ }) {
             Text("Refresh Data")
         }
         Checkbox(checked = checkState, onCheckedChange = { checkState = !checkState})
@@ -127,7 +131,7 @@ fun AddingItem(){
 @Composable
 fun ToDoMainScreenPreview() {
     MSMToDoTheme {
-        ToDoMainScreen()
+        ToDoMainScreen(stringResource(R.string.describe_the_note))
     }
 }
 

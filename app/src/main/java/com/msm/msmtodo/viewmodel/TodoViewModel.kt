@@ -1,10 +1,18 @@
 package com.msm.msmtodo.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.msm.msmtodo.model.OracleDatabase
+import com.msm.msmtodo.network.OracleAPI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import msm
+import java.io.IOException
+
 
 class TodoViewModel : ViewModel(){
     //ToDo UI state
@@ -12,12 +20,28 @@ class TodoViewModel : ViewModel(){
 //    // Backing property to avoid state updates from other classes
 //    val uiState: StateFlow<ToDoUiState> = _uiState.asStateFlow()
 
-    private val _myData = MutableStateFlow<List<msm>>(emptyList())
-    val myData: StateFlow<List<msm>> = _myData
+//    private val _myData = MutableStateFlow<List<msm>>(emptyList())
+//    val myData: StateFlow<List<msm>> = _myData
+    var todoUiState : String by mutableStateOf("")
+        private set
 
-//    init {
+    init {
 //        loadDataState()
-//    }
+        getToDoNotes()
+    }
+
+    private fun getToDoNotes() {
+//        todoUiState = "Set the Mars API status response here!"
+        try {
+            viewModelScope.launch {
+                val listResult = OracleAPI.retrofitService.getOraData()
+                todoUiState = listResult
+            }
+        } catch (e : IOException){
+            print(e.message)
+        }
+
+    }
 
     private fun getData(): MutableList<msm> {
 //        Class.forName("oracle.jdbc.driver.OracleDriver")
@@ -59,15 +83,17 @@ class TodoViewModel : ViewModel(){
         return msmList
     }
 
-    fun loadDataState(){
-        _myData.value = getData()
-//        _myData.value = "Set the Mars API status response here!"
-    }
+//    fun loadDataState(){
+//        _myData.value = getData()
+////        _myData.value = "Set the Mars API status response here!"
+//    }
 
-    fun pprint(){
-        println(_myData.value)
-        println(myData.value)
-    }
+//    fun pprint(){
+//        println(_myData.value)
+//        println(myData.value)
+//    }
+
+
 }
 
 fun main(){
@@ -76,7 +102,7 @@ fun main(){
 //        println("${it.id} chce ${it.name} a ${it.description}")
 //    }
     val todoViewModel = TodoViewModel()
-    todoViewModel.pprint()
-    todoViewModel.loadDataState()
-    todoViewModel.pprint()
+//    todoViewModel.pprint()
+//    todoViewModel.loadDataState()
+//    todoViewModel.pprint()
 }
