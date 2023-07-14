@@ -53,16 +53,6 @@ class MainActivity : ComponentActivity() {
 fun ToDoMainScreen(
     todoUiState: String,
 ) {
-    // get the connection -- set connection is could not be in Composable function
-//    val conn = OracleDatabase.getConnection()
-//    val data = ETL().getDBlist()
-//    val toDoUiState by todoViewModel.uiState.collectAsState()
-
-//    todoViewModel.loadDataState()
-
-//    println(conn.isValid(0))
-
-
     LazyColumn(modifier = Modifier
         .padding(8.dp)
         .background(MaterialTheme.colorScheme.outline),
@@ -80,15 +70,11 @@ fun ToDoMainScreen(
         }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoItem(
     modifier: Modifier = Modifier, itemDesc: String,
-//    todoViewModel: TodoViewModel = viewModel()
-
     ) {
 //    val TAG = "CHECKBOX ERR"
-//    val itemDesc = stringResource(id = R.string.describe_the_note)
     var checkState by rememberSaveable { mutableStateOf(false)}
 //    val dataState: List<msm> by todoViewModel.myData.collectAsState(
 //        initial = emptyList()
@@ -115,7 +101,6 @@ fun ToDoItem(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddingItem(){
     TextField(
