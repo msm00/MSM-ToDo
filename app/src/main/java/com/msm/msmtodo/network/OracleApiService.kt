@@ -6,8 +6,8 @@ import retrofit2.http.GET
 
 private const val BASE_URL =
 //    "https://android-kotlin-fun-mars-server.appspot.com/"
-    "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/msm/"
-
+//    "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/msm/"
+    "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/get_all/"
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())
     .baseUrl(BASE_URL)
@@ -15,10 +15,10 @@ private val retrofit = Retrofit.Builder()
 
 
 interface OracleApiService {
-//    @GET("msm")
+    @GET("msm")
 //    @GET("photos")
 //    @GET("")
-    @GET("name/Joachym")
+//    @GET("name/Joachym")
     suspend fun getOraData(): String
 }
 
