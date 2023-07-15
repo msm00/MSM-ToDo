@@ -1,7 +1,8 @@
 package com.msm.msmtodo.network
 
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import com.msm.msmtodo.model.MsmResponse
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 private const val BASE_URL =
@@ -9,7 +10,11 @@ private const val BASE_URL =
 //    "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/msm/"
     "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/get_all/"
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(
+    /*ScalarsConverterFactory.create()*/
+        /*Json.asConverterFactory("application/json".toMediaType())*/
+        GsonConverterFactory.create()
+    )
     .baseUrl(BASE_URL)
     .build()
 
@@ -19,7 +24,7 @@ interface OracleApiService {
 //    @GET("photos")
 //    @GET("")
 //    @GET("name/Joachym")
-    suspend fun getOraData(): String
+    suspend fun getOraData(): MsmResponse/*String*/
 }
 
 object OracleAPI {
