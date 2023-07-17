@@ -65,16 +65,15 @@ fun ToDoMainScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            items (todoUiState.items.size) { index -> ToDoItem(itemDesc = todoUiState.items[index].description)
 
-            repeat(30) {
-                item {
-//                ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
-                    ToDoItem(itemDesc = todoUiState)
-
-//                ToDoItem(itemDesc = dataState[0].description)
-                }
             }
-//            item {toDoUiState.msmList[0]}
+//            repeat(30) {
+//                item {
+////                ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
+//                    ToDoItem(itemDesc = todoUiState)
+//                }
+//            }
         }
         is TodoUiState.Error -> ErrorScreen( modifier = modifier.fillMaxSize())
     }
@@ -83,7 +82,7 @@ fun ToDoMainScreen(
 
 @Composable
 fun ToDoItem(
-    modifier: Modifier = Modifier, itemDesc: TodoUiState,
+    modifier: Modifier = Modifier, itemDesc: /*TodoUiState*/ String,
     ) {
 //    val TAG = "CHECKBOX ERR"
     var checkState by rememberSaveable { mutableStateOf(false)}
@@ -101,8 +100,8 @@ fun ToDoItem(
         Text(
             text = itemDesc.toString(),
             modifier
-                .padding(4.dp),
-//                .fillMaxWidth(0.8f),
+                .padding(4.dp)
+                .fillMaxWidth(0.8f),
             color = MaterialTheme.colorScheme.primary,
         )
 //        Button(onClick = { /*todoViewModel.loadDataState()*/ }) {
