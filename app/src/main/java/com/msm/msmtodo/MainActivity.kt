@@ -98,7 +98,7 @@ fun ToDoItem(
             .fillMaxWidth()
         ) {
         Text(
-            text = itemDesc.toString(),
+            text = itemDesc,
             modifier
                 .padding(4.dp)
                 .fillMaxWidth(0.8f),
