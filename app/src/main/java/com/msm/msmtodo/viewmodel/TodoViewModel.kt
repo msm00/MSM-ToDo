@@ -4,9 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.msm.msmtodo.TodoNotesApplication
+import com.msm.msmtodo.data.TodoNotesRepository
 import com.msm.msmtodo.model.Msm
-import com.msm.msmtodo.network.OracleAPI
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -17,7 +22,9 @@ sealed interface TodoUiState {
 }
 
 
-class TodoViewModel : ViewModel(){
+class TodoViewModel(
+    private val todoNotesRepository: TodoNotesRepository
+) : ViewModel(){
     //ToDo UI state
 //    private val _uiState = MutableStateFlow(ToDoUiState())
 //    // Backing property to avoid state updates from other classes
@@ -37,7 +44,9 @@ class TodoViewModel : ViewModel(){
 //        todoUiState = "Set the Mars API status response here!"
         viewModelScope.launch {
             todoUiState = try {
-                    val listResult = OracleAPI.retrofitService.getOraData()
+//                    val listResult = OracleAPI.retrofitService.getOraData()
+//                val todoNotesRepository = NetworkTodoNotesRepository()
+                val listResult = todoNotesRepository.getTodoNotes()
     //                todoUiState = listResult
 //                    TodoUiState.Success(listResult)
                 TodoUiState.Success(
@@ -51,15 +60,14 @@ class TodoViewModel : ViewModel(){
         }
     }
 
-}
+    companion object {
+        val Factory : ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as TodoNotesApplication)
+                val todoNotesRepository = application.container.todoNotesRepository
+                TodoViewModel(todoNotesRepository = todoNotesRepository)
+            }
+        }
+    }
 
-//fun main(){
-////    val data = TodoViewModel().getData()
-////    data.forEach {
-////        println("${it.id} chce ${it.name} a ${it.description}")
-////    }
-//    val todoViewModel = TodoViewModel()
-////    todoViewModel.pprint()
-////    todoViewModel.loadDataState()
-////    todoViewModel.pprint()
-//}
+}

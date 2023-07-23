@@ -42,7 +42,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val todoViewModel: TodoViewModel = viewModel()
+//                    val todoViewModel: TodoViewModel = viewModel()
+                    val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
                     ToDoMainScreen(todoUiState = todoViewModel.todoUiState)
 //                    HomeScreen(
 //                        marsUiState = todoViewModel.todoUiState)
