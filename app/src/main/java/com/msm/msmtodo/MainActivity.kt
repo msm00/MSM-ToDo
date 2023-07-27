@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    val todoViewModel: TodoViewModel = viewModel()
                     val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
-                    ToDoMainScreen(todoUiState = todoViewModel.todoUiState)
+                    ToDoMainScreen(todoUiState = todoViewModel.todoUiState/*, retryAction = todoViewModel.todoUiState*/)
 //                    HomeScreen(
 //                        marsUiState = todoViewModel.todoUiState)
                 }
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoMainScreen(
-    todoUiState: TodoUiState, modifier: Modifier = Modifier,
+    todoUiState: TodoUiState, modifier: Modifier = Modifier/*, retryAction: () -> Unit*/
 ) {
     when (todoUiState) {
         is TodoUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
@@ -76,7 +76,7 @@ fun ToDoMainScreen(
 //                }
 //            }
         }
-        is TodoUiState.Error -> ErrorScreen( modifier = modifier.fillMaxSize())
+        is TodoUiState.Error -> ErrorScreen( modifier = modifier.fillMaxSize()/*, retryAction = retryAction*/ )
     }
 
 }
@@ -122,7 +122,10 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ErrorScreen(modifier: Modifier = Modifier) {
+fun ErrorScreen(
+    modifier: Modifier = Modifier,
+    /*retryAction: () -> Unit*/
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -150,6 +153,14 @@ fun AddingItem(){
 fun ToDoMainScreenPreview() {
     MSMToDoTheme {
 //        ToDoMainScreen(stringResource(R.string.describe_the_note))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorScreenPreview() {
+    MSMToDoTheme {
+        ErrorScreen()
     }
 }
 
