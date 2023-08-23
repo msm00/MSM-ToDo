@@ -19,8 +19,10 @@ data class Msm(
     val description: String
 )
 
+/*
 @Serializable
 data class Link(
     val rel: String,
     val href: String
 )
+--*/

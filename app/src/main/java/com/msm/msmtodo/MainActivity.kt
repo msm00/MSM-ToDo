@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 import com.msm.msmtodo.viewmodel.TodoUiState
+import com.msm.msmtodo.viewmodel.TodoUiState.*
 import com.msm.msmtodo.viewmodel.TodoViewModel
 
 
@@ -58,8 +59,8 @@ fun ToDoMainScreen(
     todoUiState: TodoUiState, modifier: Modifier = Modifier/*, retryAction: () -> Unit*/
 ) {
     when (todoUiState) {
-        is TodoUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is TodoUiState.Success -> LazyColumn(
+        is Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+        is Success -> LazyColumn(
             modifier = Modifier
                 .padding(8.dp)
                 .background(MaterialTheme.colorScheme.outline),
@@ -76,7 +77,7 @@ fun ToDoMainScreen(
 //                }
 //            }
         }
-        is TodoUiState.Error -> ErrorScreen( modifier = modifier.fillMaxSize()/*, retryAction = retryAction*/ )
+        is Error -> ErrorScreen( modifier = modifier.fillMaxSize()/*, retryAction = retryAction*/ )
     }
 
 }

@@ -1,28 +1,23 @@
 package com.msm.msmtodo.network
 
-import com.msm.msmtodo.model.MsmResponse
+import com.msm.msmtodo.model.NoteResponse
 import retrofit2.http.GET
-
-//private const val BASE_URL =
-////    "https://android-kotlin-fun-mars-server.appspot.com/"
-////    "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/msm/"
-//    "https://g8c9a51bc78a43e-adwmsmdb.adb.eu-zurich-1.oraclecloudapps.com/ords/ociuser/get_all/"
-//private val retrofit = Retrofit.Builder()
-//    .addConverterFactory(
-//    /*ScalarsConverterFactory.create()*/
-//        /*Json.asConverterFactory("application/json".toMediaType())*/
-//        GsonConverterFactory.create()
-//    )
-//    .baseUrl(BASE_URL)
-//    .build()
-
+import retrofit2.http.Headers
 
 interface OracleApiService {
-    @GET("msm")
+//    @GET("msm")
 //    @GET("photos")
 //    @GET("")
 //    @GET("name/Joachym")
-    suspend fun getOraData(): MsmResponse/*String*/
+    /* note/all_notes */
+
+//    @Headers("Content-Type: application/json", "Accept-Encoding : gzip")
+//    @GET("note")
+//    suspend fun getOraData(): NoteResponse /*MsmResponse*//*String*/
+
+    @Headers("Content-Type: application/json")
+    @GET("note/all_notes/")
+    suspend fun getOraData(): NoteResponse /*MsmResponse*//*String*/
 }
 
 //object OracleAPI {

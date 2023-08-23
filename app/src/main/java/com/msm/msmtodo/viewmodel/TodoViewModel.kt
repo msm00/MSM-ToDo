@@ -1,5 +1,6 @@
 package com.msm.msmtodo.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,12 +12,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.msm.msmtodo.TodoNotesApplication
 import com.msm.msmtodo.data.TodoNotesRepository
-import com.msm.msmtodo.model.Msm
+import com.msm.msmtodo.model.Note
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 sealed interface TodoUiState {
-    data class Success(val items: /*String*/ List<Msm>) : TodoUiState
+    data class Success(val items: /*String*/ List</*Msm*/Note>) : TodoUiState
     object Error : TodoUiState
     object Loading : TodoUiState
 }
@@ -47,6 +48,7 @@ class TodoViewModel(
 //                    val listResult = OracleAPI.retrofitService.getOraData()
 //                val todoNotesRepository = NetworkTodoNotesRepository()
                 val listResult = todoNotesRepository.getTodoNotes()
+                Log.e("LIST ERR", "listResult: $listResult")
     //                todoUiState = listResult
 //                    TodoUiState.Success(listResult)
                 TodoUiState.Success(
