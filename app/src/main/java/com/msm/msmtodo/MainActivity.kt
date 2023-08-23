@@ -13,15 +13,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,18 +54,59 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    val todoViewModel: TodoViewModel = viewModel()
-                    val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
-                    ToDoMainScreen(todoUiState = todoViewModel.todoUiState/*, retryAction = todoViewModel.todoUiState*/)
-//                    HomeScreen(
-//                        marsUiState = todoViewModel.todoUiState)
+//                    val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
+//                    ToDoMainBody(todoUiState = todoViewModel.todoUiState/*, retryAction = todoViewModel.todoUiState*/)
+                    ToDoMainScreen()
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoMainScreen(
+//    navigateToItemEntry: () -> Unit,
+//    navigateToItemUpdate: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+//    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(title = {
+                Text(text = stringResource(id = R.string.app_name))
+            })
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {  },
+                shape = MaterialTheme.shapes.medium,
+//                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.item_entry_title)
+                )
+            }
+        },
+    ) { innerPadding ->
+        ToDoMainBody(
+            todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
+//            onItemClick = navigateToItemUpdate,
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ToDoMainBody(
     todoUiState: TodoUiState, modifier: Modifier = Modifier/*, retryAction: () -> Unit*/
 ) {
     when (todoUiState) {

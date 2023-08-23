@@ -65,22 +65,8 @@ dependencies {
     implementation 'androidx.compose.ui:ui-graphics:1.4.3'
     implementation 'androidx.compose.ui:ui-tooling-preview:1.4.3'
     implementation 'androidx.compose.material3:material3:1.1.1'
-    /* jdbc dependencies */
-//    implementation ('com.oracle.database.security:oraclepki:23.2.0.0')
-//    implementation ('com.oracle.database.security:osdt_cert:21.10.0.0')
-//    implementation ('com.oracle.database.security:osdt_core:21.10.0.0')
-//    implementation ('com.oracle.database.jdbc:ojdbc8:23.2.0.0')
+
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
-//    implementation files('libs/ojdbc8.jar')
-//    implementation fileTree(dir: '/libs/*', include: ['*.aar', '*.jar'], exclude: [])
-    //    implementation(enforcedPlatform("com.oracle.database.jdbc:ojdbc-bom:19.7.0.0"))
-//    implementation("com.oracle.database.jdbc:ojdbc8")
-//    implementation("com.oracle.database.jdbc:ucp")
-//    implementation("com.oracle.database.security:oraclepki")
-//    implementation("com.oracle.database.security:osdt_core")
-//    implementation("com.oracle.database.security:osdt_cert")
-//    implementation("com.oracle.database.ha:ons")
-//    implementation("com.oracle.database.ha:simplefan")
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -91,6 +77,12 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+
+    //Room
+//    implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+//    implementation("androidx.core:core-ktx:1.10.1")
+//    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+//    implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 
     // Kotlin serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
