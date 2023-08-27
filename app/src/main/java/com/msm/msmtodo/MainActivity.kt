@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -31,6 +33,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -51,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+//                    color = MaterialTheme.colorScheme.background
                 ) {
 //                    val todoViewModel: TodoViewModel = viewModel()
 //                    val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
@@ -66,10 +69,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoMainScreen(
-//    navigateToItemEntry: () -> Unit,
-//    navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
-//    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
@@ -77,9 +77,10 @@ fun ToDoMainScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(title = {
-                Text(text = stringResource(id = R.string.app_name))
-            })
+//            TopAppBar(title = {
+//                Text(text = stringResource(id = R.string.app_name))
+//            })
+            ToDoAppBar()
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -106,6 +107,32 @@ fun ToDoMainScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun ToDoAppBar(
+    modifier: Modifier = Modifier
+){
+    CenterAlignedTopAppBar(
+        title = {
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.icons8_note_64),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(dimensionResource(R.dimen.image_size))
+                        .padding(dimensionResource(R.dimen.padding_medium)),
+                )
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun ToDoMainBody(
     todoUiState: TodoUiState, modifier: Modifier = Modifier/*, retryAction: () -> Unit*/
 ) {
@@ -113,20 +140,14 @@ fun ToDoMainBody(
         is Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
         is Success -> LazyColumn(
             modifier = Modifier
-                .padding(8.dp)
-                .background(MaterialTheme.colorScheme.outline),
+                .padding(dimensionResource(id = R.dimen.padding_small)),
+//                .background(MaterialTheme.colorScheme.outline),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             items (todoUiState.items.size) { index -> ToDoItem(itemDesc = todoUiState.items[index].description)
 
             }
-//            repeat(30) {
-//                item {
-////                ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
-//                    ToDoItem(itemDesc = todoUiState)
-//                }
-//            }
         }
         is Error -> ErrorScreen( modifier = modifier.fillMaxSize()/*, retryAction = retryAction*/ )
     }
@@ -137,29 +158,23 @@ fun ToDoMainBody(
 fun ToDoItem(
     modifier: Modifier = Modifier, itemDesc: /*TodoUiState*/ String,
     ) {
-//    val TAG = "CHECKBOX ERR"
     var checkState by rememberSaveable { mutableStateOf(false)}
-//    val dataState: List<msm> by todoViewModel.myData.collectAsState(
-//        initial = emptyList()
-//    )
 
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(all = 4.dp)
-            .background(MaterialTheme.colorScheme.inversePrimary)
+            .padding(dimensionResource(id = R.dimen.padding_small))
+//            .background(MaterialTheme.colorScheme.inversePrimary)
             .fillMaxWidth()
         ) {
         Text(
             text = itemDesc,
             modifier
-                .padding(4.dp)
-                .fillMaxWidth(0.8f),
-            color = MaterialTheme.colorScheme.primary,
+                .padding(dimensionResource(id = R.dimen.padding_small))
+//                .fillMaxWidth(0.8f),
+//            color = MaterialTheme.colorScheme.primary,
         )
-//        Button(onClick = { /*todoViewModel.loadDataState()*/ }) {
-//            Text("Refresh Data")
-//        }
+        Spacer(Modifier.weight(1f))
         Checkbox(checked = checkState, onCheckedChange = { checkState = !checkState})
     }
 }
@@ -186,16 +201,16 @@ fun ErrorScreen(
         Image(
             painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
         )
-        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)))
     }
 }
 
 @Composable
-fun AddingItem(){
+fun AddingItem(modifier: Modifier = Modifier){
     TextField(
-        value = "",
+        value = "+",
         onValueChange = {},
-        modifier = Modifier,
+        modifier = modifier,
     )
 
 }
