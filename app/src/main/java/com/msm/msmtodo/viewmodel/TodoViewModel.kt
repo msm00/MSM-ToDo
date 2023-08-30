@@ -26,13 +26,6 @@ sealed interface TodoUiState {
 class TodoViewModel(
     private val todoNotesRepository: TodoNotesRepository
 ) : ViewModel(){
-    //ToDo UI state
-//    private val _uiState = MutableStateFlow(ToDoUiState())
-//    // Backing property to avoid state updates from other classes
-//    val uiState: StateFlow<ToDoUiState> = _uiState.asStateFlow()
-
-//    private val _myData = MutableStateFlow<List<msm>>(emptyList())
-//    val myData: StateFlow<List<msm>> = _myData
     var todoUiState : TodoUiState by mutableStateOf(TodoUiState.Loading)
         private set
 
@@ -48,7 +41,7 @@ class TodoViewModel(
 //                    val listResult = OracleAPI.retrofitService.getOraData()
 //                val todoNotesRepository = NetworkTodoNotesRepository()
                 val listResult = todoNotesRepository.getTodoNotes()
-                Log.e("LIST ERR", "listResult: $listResult")
+//                Log.e("LIST ERR", "listResult: $listResult")
     //                todoUiState = listResult
 //                    TodoUiState.Success(listResult)
                 TodoUiState.Success(

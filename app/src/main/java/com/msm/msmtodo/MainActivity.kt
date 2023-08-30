@@ -10,10 +10,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -25,15 +26,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,12 +54,11 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
                 ) {
 //                    val todoViewModel: TodoViewModel = viewModel()
 //                    val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
 //                    ToDoMainBody(todoUiState = todoViewModel.todoUiState/*, retryAction = todoViewModel.todoUiState*/)
-                    ToDoMainScreen()
+                    ToDoMainScreen(/*modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)*/)
                 }
             }
         }
@@ -76,17 +75,17 @@ fun ToDoMainScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+//        containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+//        contentColor = MaterialTheme.colorScheme.error,
         topBar = {
-//            TopAppBar(title = {
-//                Text(text = stringResource(id = R.string.app_name))
-//            })
+//            TopAppBar(title = { })
             ToDoAppBar()
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {  },
                 shape = MaterialTheme.shapes.medium,
-//                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -107,13 +106,14 @@ fun ToDoMainScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoAppBar(
-    modifier: Modifier = Modifier
-){
+fun ToDoAppBar
+(
+    modifier: Modifier = Modifier,
+) {
     CenterAlignedTopAppBar(
         title = {
             Row (
-                verticalAlignment = Alignment.CenterVertically
+//                verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.icons8_note_64),
@@ -127,55 +127,72 @@ fun ToDoAppBar(
                     style = MaterialTheme.typography.labelLarge
                 )
             }
-        }
+        },
+        modifier = modifier,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoMainBody(
-    todoUiState: TodoUiState, modifier: Modifier = Modifier/*, retryAction: () -> Unit*/
+    todoUiState: TodoUiState,
+    modifier : Modifier = Modifier/*, retryAction: () -> Unit*/
 ) {
     when (todoUiState) {
-        is Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+        is Loading -> LoadingScreen(
+            modifier = modifier.fillMaxSize()
+        )
         is Success -> LazyColumn(
-            modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_small)),
-//                .background(MaterialTheme.colorScheme.outline),
+            modifier = modifier
+                .padding(dimensionResource(id = R.dimen.padding_min)),
+//                .background(MaterialTheme.colorScheme.primaryContainer),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
-            items (todoUiState.items.size) { index -> ToDoItem(itemDesc = todoUiState.items[index].description)
+            items (todoUiState.items.size) { index -> ToDoItem(
+                itemDesc = todoUiState.items[index].description
+            )
 
             }
         }
-        is Error -> ErrorScreen( modifier = modifier.fillMaxSize()/*, retryAction = retryAction*/ )
+        is Error -> ErrorScreen(
+            modifier = modifier.fillMaxSize()/*, retryAction = retryAction*/
+                )
     }
 
 }
 
 @Composable
 fun ToDoItem(
-    modifier: Modifier = Modifier, itemDesc: /*TodoUiState*/ String,
+    modifier: Modifier = Modifier,
+    itemDesc: String,
     ) {
     var checkState by rememberSaveable { mutableStateOf(false)}
 
-    Row(horizontalArrangement = Arrangement.Center,
+    Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(dimensionResource(id = R.dimen.padding_small))
-//            .background(MaterialTheme.colorScheme.inversePrimary)
-            .fillMaxWidth()
+        modifier = modifier
+            .padding(
+                vertical = dimensionResource(id = R.dimen.padding_min),
+                horizontal = dimensionResource(id = R.dimen.padding_medium)
+            )
+            .background(
+                color = MaterialTheme.colorScheme.primaryContainer,
+                shape = RoundedCornerShape(dimensionResource(id = R.dimen.padding_min))
+            )
+//            .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+
         ) {
         Text(
             text = itemDesc,
-            modifier
-                .padding(dimensionResource(id = R.dimen.padding_small))
-//                .fillMaxWidth(0.8f),
-//            color = MaterialTheme.colorScheme.primary,
+            modifier = modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_medium)),
+////                .fillMaxWidth(0.8f),
         )
         Spacer(Modifier.weight(1f))
-        Checkbox(checked = checkState, onCheckedChange = { checkState = !checkState})
+        Checkbox(
+            checked = checkState,
+            onCheckedChange = { checkState = !checkState},
+
+        )
     }
 }
 
@@ -205,15 +222,14 @@ fun ErrorScreen(
     }
 }
 
-@Composable
-fun AddingItem(modifier: Modifier = Modifier){
-    TextField(
-        value = "+",
-        onValueChange = {},
-        modifier = modifier,
-    )
-
-}
+//@Composable
+//fun AddingItem(modifier: Modifier = Modifier){
+//    TextField(
+//        value = "+",
+//        onValueChange = {},
+//        modifier = modifier,
+//    )
+//}
 
 @Preview(showBackground = true)
 @Composable
