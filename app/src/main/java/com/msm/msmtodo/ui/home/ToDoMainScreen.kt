@@ -36,25 +36,38 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+//import androidx.navigation.compose.NavHost
+//import androidx.navigation.NavHostController
+//import androidx.navigation.compose.composable
+//import androidx.navigation.compose.rememberNavController
 import com.msm.msmtodo.R
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 import com.msm.msmtodo.viewmodel.TodoUiState
 import com.msm.msmtodo.viewmodel.TodoViewModel
 
+/**
+ * enum values that represent the screens in the app
+ */
+//enum class ToDoMainNav(){
+//    ALL_NOTES,
+//    ADD_NOTES,
+//    EDIT_NOTES,
+//    DELETE_NOTES
+//}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoMainScreen(
     modifier: Modifier = Modifier,
+//    navController: NavHostController = rememberNavController()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-//        containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-//        contentColor = MaterialTheme.colorScheme.error,
+
         topBar = {
-//            TopAppBar(title = { })
             ToDoAppBar()
         },
         floatingActionButton = {
@@ -70,6 +83,16 @@ fun ToDoMainScreen(
             }
         },
     ) { innerPadding ->
+//        NavHost(
+//            navController = navController,
+//            startDestination = ToDoMainNav.ALL_NOTES.name
+//
+//        ){
+//            composable(route = ToDoMainNav.ALL_NOTES.name){
+//
+//            }
+//        }
+
         ToDoMainBody(
             todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
 //            onItemClick = navigateToItemUpdate,
