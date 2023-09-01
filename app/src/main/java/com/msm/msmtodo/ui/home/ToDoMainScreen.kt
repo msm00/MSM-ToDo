@@ -13,14 +13,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -68,7 +71,7 @@ fun ToDoMainScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
-            ToDoAppBar()
+            ToDoAppBar(navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -110,11 +113,21 @@ fun ToDoMainScreen(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun ToDoAppBarPreview() {
+    MSMToDoTheme {
+        ToDoAppBar(canNavigateBack = true, navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoAppBar
-            (
+fun ToDoAppBar(
     modifier: Modifier = Modifier,
+    canNavigateBack: Boolean = false,
+    navigateUp : () -> Unit,
+    currentScreen: ToDoMainNav
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -134,7 +147,16 @@ fun ToDoAppBar
                 )
             }
         },
-        modifier = modifier,
+//        modifier = modifier,
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back_button))
+                }
+            }
+        },
     )
 }
 
@@ -239,13 +261,13 @@ fun ErrorScreen(
 //    )
 //}
 
-@Preview(showBackground = true)
-@Composable
-fun ToDoMainScreenPreview() {
-    MSMToDoTheme {
-//        ToDoMainScreen(stringResource(R.string.describe_the_note))
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ToDoMainScreenPreview() {
+//    MSMToDoTheme {
+//        ToDoMainScreen()
+//    }
+//}
 
 @Preview(showBackground = true)
 @Composable
@@ -259,6 +281,6 @@ fun ErrorScreenPreview() {
 @Composable
 fun ToDoItemPreview() {
     MSMToDoTheme {
-//        ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
+        ToDoItem(itemDesc = stringResource(R.string.describe_the_note))
     }
 }

@@ -5,4 +5,8 @@
     <string name="retry">Retry</string>
     <string name="loading">Loading</string>
     <string name="item_entry_title">Add Note</string>
+    <string name="back_button">Back</string>
+    <string name="forward_button">Next</string>
+    <string name="collapse_button">Collapse</string>
+    <string name="expand_button">Expand</string>
 </resources>
