@@ -9,4 +9,5 @@
     <string name="forward_button">Next</string>
     <string name="collapse_button">Collapse</string>
     <string name="expand_button">Expand</string>
+    <string name="todo_home_screen">Todo Home</string>
 </resources>

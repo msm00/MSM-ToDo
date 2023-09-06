@@ -13,17 +13,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,28 +35,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.msm.msmtodo.R
+import com.msm.msmtodo.navigation.NavigationDestination
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 import com.msm.msmtodo.viewmodel.TodoUiState
 import com.msm.msmtodo.viewmodel.TodoViewModel
 
+object HomeDestination : NavigationDestination {
+    override val route = "home"
+    override val titleRes = R.string.app_name
+}
+
 /**
  * enum values that represent the screens in the app
  */
-enum class ToDoMainNav(){
-    ALL_NOTES,
-    ADD_NOTES,
-    EDIT_NOTES,
-    DELETE_NOTES
-}
+//enum class ToDoMainNav {
+//    ALL_NOTES,
+//    ADD_NOTES,
+//    EDIT_NOTES,
+//    DELETE_NOTES
+//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoMainScreen(
+fun HomeScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -71,7 +71,7 @@ fun ToDoMainScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
-            ToDoAppBar(navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
+//            ToDoAppBar(navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -85,23 +85,25 @@ fun ToDoMainScreen(
                 )
             }
         },
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = ToDoMainNav.ALL_NOTES.name,
-            modifier = modifier.padding(innerPadding)
-        ){
-            composable(route = ToDoMainNav.ALL_NOTES.name){
-                ToDoMainBody(
-                    todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
-        //            onItemClick = navigateToItemUpdate,
-                    modifier = modifier.fillMaxSize()
-                )
-            }
-            composable(route = ToDoMainNav.ADD_NOTES.name){
-
-            }
-        }
+    )
+    {
+            innerPadding -> true
+//        NavHost(
+//            navController = navController,
+//            startDestination = ToDoMainNav.ALL_NOTES.name,
+//            modifier = modifier.padding(innerPadding)
+//        ){
+//            composable(route = ToDoMainNav.ALL_NOTES.name){
+//                ToDoMainBody(
+//                    todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
+//        //            onItemClick = navigateToItemUpdate,
+//                    modifier = modifier.fillMaxSize()
+//                )
+//            }
+//            composable(route = ToDoMainNav.ADD_NOTES.name){
+//
+//            }
+//        }
 
 //        ToDoMainBody(
 //            todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
@@ -113,14 +115,15 @@ fun ToDoMainScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ToDoAppBarPreview() {
-    MSMToDoTheme {
-        ToDoAppBar(canNavigateBack = true, navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ToDoAppBarPreview() {
+//    MSMToDoTheme {
+////        ToDoAppBar(navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
+//    }
+//}
 
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoAppBar(
@@ -159,8 +162,7 @@ fun ToDoAppBar(
         },
     )
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
+*/
 @Composable
 fun ToDoMainBody(
     todoUiState: TodoUiState,
