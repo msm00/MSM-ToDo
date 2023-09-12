@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -19,23 +20,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.msm.msmtodo.ui.home.HomeDestination
+import com.msm.msmtodo.navigation.ToDoNavHost
 
 @Composable
 fun TodoApp(
-    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ){
-
+    ToDoNavHost(navController = navController)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoTopAppBar(
+    title: String,
+    canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
-    canNavigateBack: Boolean = false,
-    navigateUp : () -> Unit,
-    currentScreen: HomeDestination
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    navigateUp: () -> Unit = {}
 ){
     CenterAlignedTopAppBar(
         title = {
@@ -50,12 +51,11 @@ fun ToDoTopAppBar(
                         .padding(dimensionResource(R.dimen.padding_medium)),
                 )
                 Text(
-                    text = stringResource(id = R.string.app_name),
+                    text = title,//stringResource(id = R.string.app_name),
                     style = MaterialTheme.typography.labelLarge
                 )
             }
         },
-//        modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
@@ -66,6 +66,7 @@ fun ToDoTopAppBar(
                 }
             }
         },
+        scrollBehavior = scrollBehavior,
     )
 
 }

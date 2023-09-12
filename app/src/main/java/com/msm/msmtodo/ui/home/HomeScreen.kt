@@ -35,9 +35,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.msm.msmtodo.R
+import com.msm.msmtodo.ToDoTopAppBar
 import com.msm.msmtodo.navigation.NavigationDestination
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 import com.msm.msmtodo.viewmodel.TodoUiState
@@ -62,7 +61,9 @@ object HomeDestination : NavigationDestination {
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+//    navController: NavHostController = rememberNavController()
+    navigateToItemEntry: () -> Unit,
+    navigateToItemUpdate: (Int) -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
@@ -72,6 +73,10 @@ fun HomeScreen(
 
         topBar = {
 //            ToDoAppBar(navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
+            ToDoTopAppBar(
+                title = stringResource(id = HomeDestination.titleRes),
+                canNavigateBack = false
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -86,85 +91,18 @@ fun HomeScreen(
             }
         },
     )
-    {
-            innerPadding -> true
-//        NavHost(
-//            navController = navController,
-//            startDestination = ToDoMainNav.ALL_NOTES.name,
-//            modifier = modifier.padding(innerPadding)
-//        ){
-//            composable(route = ToDoMainNav.ALL_NOTES.name){
-//                ToDoMainBody(
-//                    todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
-//        //            onItemClick = navigateToItemUpdate,
-//                    modifier = modifier.fillMaxSize()
-//                )
-//            }
-//            composable(route = ToDoMainNav.ADD_NOTES.name){
-//
-//            }
-//        }
-
-//        ToDoMainBody(
-//            todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
-////            onItemClick = navigateToItemUpdate,
-//            modifier = modifier
-//                .padding(innerPadding)
-//                .fillMaxSize()
-//        )
+    { innerPadding ->
+        HomeBody(todoUiState = todoViewModel.todoUiState,
+            /*, retryAction = todoViewModel.todoUiState*/
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+            )
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun ToDoAppBarPreview() {
-//    MSMToDoTheme {
-////        ToDoAppBar(navigateUp = {}, currentScreen = ToDoMainNav.ALL_NOTES)
-//    }
-//}
-
-/*
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoAppBar(
-    modifier: Modifier = Modifier,
-    canNavigateBack: Boolean = false,
-    navigateUp : () -> Unit,
-    currentScreen: ToDoMainNav
-) {
-    CenterAlignedTopAppBar(
-        title = {
-            Row (
-//                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.icons8_note_64),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(dimensionResource(R.dimen.image_size))
-                        .padding(dimensionResource(R.dimen.padding_medium)),
-                )
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    style = MaterialTheme.typography.labelLarge
-                )
-            }
-        },
-//        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(id = R.string.back_button))
-                }
-            }
-        },
-    )
-}
-*/
-@Composable
-fun ToDoMainBody(
+fun HomeBody(
     todoUiState: TodoUiState,
     modifier : Modifier = Modifier/*, retryAction: () -> Unit*/
 ) {
@@ -253,23 +191,6 @@ fun ErrorScreen(
         ))
     }
 }
-
-//@Composable
-//fun AddingItem(modifier: Modifier = Modifier){
-//    TextField(
-//        value = "+",
-//        onValueChange = {},
-//        modifier = modifier,
-//    )
-//}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ToDoMainScreenPreview() {
-//    MSMToDoTheme {
-//        ToDoMainScreen()
-//    }
-//}
 
 @Preview(showBackground = true)
 @Composable
