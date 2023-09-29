@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.msm.msmtodo.navigation.ToDoNavHost
+import com.msm.msmtodo.ui.navigation.ToDoNavHost
 
 @Composable
 fun TodoApp(

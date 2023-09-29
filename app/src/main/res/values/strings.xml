@@ -10,4 +10,5 @@
     <string name="collapse_button">Collapse</string>
     <string name="expand_button">Expand</string>
     <string name="todo_home_screen">Todo Home</string>
+    <string name="item_add_screen">Item Add</string>
 </resources>

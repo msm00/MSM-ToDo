@@ -1,4 +1,4 @@
-package com.msm.msmtodo.navigation
+package com.msm.msmtodo.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.msm.msmtodo.ui.home.HomeDestination
 import com.msm.msmtodo.ui.home.HomeScreen
+import com.msm.msmtodo.ui.item.ItemAddDestination
+import com.msm.msmtodo.ui.item.ItemAddScreen
 
 /**
  * Provides Navigation graph for the application.
@@ -24,16 +26,16 @@ fun ToDoNavHost(
     ){
         composable(route = HomeDestination.route){
             HomeScreen(
-                navigateToItemEntry = {},
-                navigateToItemUpdate = {6}
+                navigateToItemAdd = {navController.navigate(ItemAddDestination.route)},
 //                todoUiState = todoViewModel.todoUiState,/*, retryAction = todoViewModel.todoUiState*/
 //                //            onItemClick = navigateToItemUpdate,
 //                modifier = modifier.fillMaxSize()
             )
         }
-//        composable(route = ToDoMainNav.ADD_NOTES.name){
+        composable(route = ItemAddDestination.route){
+            ItemAddScreen()
 
-//        }
+        }
     }
 
 }

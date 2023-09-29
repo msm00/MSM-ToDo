@@ -1,6 +1,5 @@
 package com.msm.msmtodo.data
 
-import com.msm.msmtodo.model.MsmResponse
 import com.msm.msmtodo.model.NoteResponse
 import com.msm.msmtodo.network.OracleApiService
 

@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.msm.msmtodo.R
 import com.msm.msmtodo.ToDoTopAppBar
-import com.msm.msmtodo.navigation.NavigationDestination
+import com.msm.msmtodo.ui.navigation.NavigationDestination
 import com.msm.msmtodo.ui.theme.MSMToDoTheme
 import com.msm.msmtodo.viewmodel.TodoUiState
 import com.msm.msmtodo.viewmodel.TodoViewModel
@@ -62,8 +62,8 @@ object HomeDestination : NavigationDestination {
 fun HomeScreen(
     modifier: Modifier = Modifier,
 //    navController: NavHostController = rememberNavController()
-    navigateToItemEntry: () -> Unit,
-    navigateToItemUpdate: (Int) -> Unit,
+    navigateToItemAdd: () -> Unit,
+//    navigateToItemUpdate: (Int) -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val todoViewModel: TodoViewModel = viewModel(factory = TodoViewModel.Factory)
@@ -80,7 +80,7 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {  },
+                onClick = { navigateToItemAdd },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
             ) {

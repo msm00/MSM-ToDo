@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.msm.msmtodo.navigation
+package com.msm.msmtodo.ui.navigation
 
 /**
  * Interface to describe the navigation destinations for the app
